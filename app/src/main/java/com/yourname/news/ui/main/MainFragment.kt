@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.yourname.news.R
 
 class MainFragment : Fragment() {
@@ -27,4 +28,8 @@ class MainFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
+    override fun onResume() {
+        super.onResume()
+        requireView().findViewById<TextView>(R.id.message).text = viewModel.item.title
+    }
 }
