@@ -1,19 +1,22 @@
 package com.yourname.news.ui.item
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.yourname.news.R
+import com.yourname.news.databinding.ItemFragmentBinding
+import com.yourname.news.model.NewsItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ItemFragment : Fragment() {
     companion object {
-        private const val ARG_TITLE = "title"
-        fun newInstance(title: String) = ItemFragment().apply {
+        private const val ARG_ITEM = "item"
+        fun newInstance(item: NewsItem) = ItemFragment().apply {
             arguments = Bundle().apply {
-                putString(ARG_TITLE, title)
+                putParcelable(ARG_ITEM, item)
             }
         }
     }
@@ -25,16 +28,23 @@ class ItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.item_fragment, container, false)
+        val vm = viewModel
+        return ItemFragmentBinding.inflate(inflater).apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = vm
+            btnOpen.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(vm.item.value?.link)))
+            }
+        }.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.title = requireArguments().getString(ARG_TITLE)!!
+        viewModel.item.value = requireArguments().getParcelable(ARG_ITEM)
     }
 
     override fun onResume() {
         super.onResume()
-        requireActivity().title = viewModel.title
+        requireActivity().title = viewModel.item.value?.title
     }
 }

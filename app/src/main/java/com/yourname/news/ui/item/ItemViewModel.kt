@@ -1,8 +1,9 @@
 package com.yourname.news.ui.item
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.yourname.news.model.NewsItem
 
-// ItemViewModel.kt
 class ItemViewModel : ViewModel() {
-    var title: String = ""
+    var item = MutableLiveData<NewsItem>()
 }

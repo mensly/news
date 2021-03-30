@@ -32,7 +32,7 @@ class MainFragment : Fragment() {
         requireView().findViewById<RecyclerView>(R.id.list).adapter =
             NewsItemAdapter(viewLifecycleOwner, viewModel.items) {
                 parentFragmentManager.commit {
-                    replace(R.id.container, ItemFragment.newInstance(it.title))
+                    replace(R.id.container, ItemFragment.newInstance(it))
                     addToBackStack(it.id)
                 }
             }
