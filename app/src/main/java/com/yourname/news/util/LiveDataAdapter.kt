@@ -9,16 +9,18 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.properties.Delegates
 
-abstract class LiveDataAdapter<T>(lifecycleOwner: LifecycleOwner,
-                                  @LayoutRes val layout: Int,
-                                  val data: LiveData<List<T>>,
-                                  val onClickItem: (T) -> Unit = { }):
+abstract class LiveDataAdapter<T>(
+    lifecycleOwner: LifecycleOwner,
+    @LayoutRes val layout: Int,
+    val data: LiveData<List<T>>,
+    val onClickItem: (T) -> Unit = { }
+) :
     RecyclerView.Adapter<LiveDataAdapter<T>.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener { item?.let { onClickItem(it) } }
         }
-        var item: T? by Delegates.observable(null) { _,_,newItem ->
+        var item: T? by Delegates.observable(null) { _, _, newItem ->
             newItem?.let { display(itemView, it) }
         }
     }
