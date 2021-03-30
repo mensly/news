@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.yourname.news.R
 
 class MainFragment : Fragment() {
@@ -25,11 +26,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
-    override fun onResume() {
-        super.onResume()
-        requireView().findViewById<TextView>(R.id.message).text = viewModel.item.title
+        requireView().findViewById<RecyclerView>(R.id.list).adapter =
+            NewsItemAdapter(viewLifecycleOwner, viewModel.items)
     }
 }
