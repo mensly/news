@@ -3,8 +3,12 @@ package com.yourname.news.services
 import com.yourname.news.model.NewsItem
 import kotlinx.coroutines.delay
 
-class NewsRepository {
-    suspend fun getNews(): List<NewsItem> {
+interface NewsRepository {
+    suspend fun getNews(): List<NewsItem>
+}
+
+class MockNewsRespositoryImpl : NewsRepository {
+    override suspend fun getNews(): List<NewsItem> {
         delay(1000)
         return listOf(
             NewsItem(
@@ -17,4 +21,8 @@ class NewsRepository {
             ),
         )
     }
+}
+
+class NewsRepositoryImpl(val api: Rss2JsonApi) : NewsRepository {
+    override suspend fun getNews() = api.getFeed("https://www.ausgamers.com/rss/news.php").items
 }

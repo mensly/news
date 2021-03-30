@@ -30,4 +30,9 @@ class MainFragment : Fragment() {
         requireView().findViewById<RecyclerView>(R.id.list).adapter =
             NewsItemAdapter(viewLifecycleOwner, viewModel.items)
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
+    }
 }
