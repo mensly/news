@@ -12,11 +12,12 @@ import com.yourname.news.util.LiveDataAdapter
 
 class NewsItemAdapter(
     lifecycleOwner: LifecycleOwner,
-    data: LiveData<List<NewsItem>>
+    data: LiveData<List<NewsItem>>,
+    onClick: (NewsItem) -> Unit = { }
 ) :
     LiveDataAdapter<NewsItem>(
         lifecycleOwner,
-        R.layout.cell_news_item, data
+        R.layout.cell_news_item, data, onClick
     ) {
     override fun display(itemView: View, item: NewsItem) {
         itemView.findViewById<TextView>(android.R.id.text1).text = item.title

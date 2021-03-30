@@ -4,6 +4,7 @@ import android.app.Application
 import com.yourname.news.services.NewsRepository
 import com.yourname.news.services.NewsRepositoryImpl
 import com.yourname.news.services.Rss2JsonApi
+import com.yourname.news.ui.item.ItemViewModel
 import com.yourname.news.ui.main.MainViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -28,6 +29,7 @@ class App : Application() {
         }
         val viewModelModule = module(override = true) {
             viewModel { MainViewModel(get()) }
+            viewModel { ItemViewModel() }
         }
         startKoin {
             androidContext(this@App)
